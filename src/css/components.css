@@ -1,0 +1,307 @@
+/**
+ * Component Styles
+ * Reusable UI components
+ */
+
+/* Card Component */
+.card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2xl);
+    margin-bottom: var(--space-xl);
+    box-shadow: var(--shadow-card);
+}
+
+.card h2 {
+    margin-bottom: var(--space-lg);
+    color: var(--text-primary);
+    font-size: var(--font-size-2xl);
+}
+
+/* Button Component */
+.btn {
+    width: 100%;
+    padding: 14px var(--space-2xl);
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+}
+
+.btn:disabled {
+    background: var(--text-muted);
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* Button Variants */
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+    color: var(--text-white);
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-button);
+}
+
+.btn-secondary {
+    background: var(--color-secondary);
+    color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+    background: var(--color-secondary-dark);
+}
+
+.btn-danger {
+    background: var(--color-error);
+    color: var(--text-white);
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--font-size-md);
+    width: auto;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+/* Input Component */
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+    padding: var(--space-md);
+    border: 2px solid var(--border-input);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+    font-size: var(--font-size-md);
+    font-family: var(--font-family);
+    transition: border-color var(--transition-normal);
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: var(--border-input-focus);
+}
+
+input::placeholder {
+    color: var(--text-muted);
+}
+
+/* Info Row Component */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+}
+
+.info-row:last-child {
+    margin-bottom: 0;
+}
+
+.label {
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+}
+
+.value {
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-weight: var(--font-weight-semibold);
+    word-break: break-all;
+}
+
+/* Token Item Component */
+.token-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-lg);
+    background: var(--bg-light);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+}
+
+.token-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.token-symbol {
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    font-size: var(--font-size-xl);
+}
+
+.token-address {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.token-balance {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-primary);
+}
+
+.token-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+/* Transaction Item Component */
+.tx-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: var(--space-lg);
+    background: var(--bg-light);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--color-primary);
+    transition: background var(--transition-fast);
+}
+
+.tx-item:hover {
+    background: var(--color-secondary);
+}
+
+.tx-item.sent {
+    border-left-color: var(--color-error);
+}
+
+.tx-item.received {
+    border-left-color: var(--color-success);
+}
+
+.tx-item.pending {
+    border-left-color: var(--color-warning);
+}
+
+.tx-item.failed {
+    border-left-color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.tx-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+}
+
+.tx-type {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.tx-type.sent { color: var(--color-error); }
+.tx-type.received { color: var(--color-success); }
+.tx-type.pending { color: var(--color-warning); }
+.tx-type.failed { color: var(--text-muted); }
+
+.tx-hash {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.tx-hash a {
+    color: var(--color-primary);
+}
+
+.tx-details {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.tx-amount {
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-lg);
+    text-align: right;
+}
+
+.tx-amount.sent { color: var(--color-error); }
+.tx-amount.received { color: var(--color-success); }
+
+.tx-time {
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    text-align: right;
+    margin-top: var(--space-xs);
+}
+
+/* Status Badge */
+.tx-status {
+    font-size: var(--font-size-xs);
+    padding: 2px var(--space-sm);
+    border-radius: 12px;
+    margin-left: var(--space-sm);
+}
+
+.tx-status.confirmed {
+    background: var(--color-success-light);
+    color: #065f46;
+}
+
+.tx-status.pending {
+    background: var(--color-warning-light);
+    color: #92400e;
+}
+
+.tx-status.failed {
+    background: var(--color-error-light);
+    color: #991b1b;
+}
+
+/* Tab Component */
+.tx-tabs {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+}
+
+.tx-tab {
+    flex: 1;
+    padding: 10px var(--space-lg);
+    border: none;
+    background: var(--color-secondary);
+    color: var(--text-secondary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    font-weight: var(--font-weight-medium);
+    transition: all var(--transition-normal);
+}
+
+.tx-tab.active {
+    background: var(--color-primary);
+    color: var(--text-white);
+}
+
+.tx-tab:hover:not(.active) {
+    background: var(--color-secondary-dark);
+}
+
+/* List Components */
+.token-list,
+.transaction-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.transaction-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
