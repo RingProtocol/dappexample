@@ -46,13 +46,14 @@ A simple decentralized application built with Next.js, React, TypeScript, and We
 
 ```bash
 # Install dependencies
-npm install
+yarn install
 
 # Run development server
-npm run dev
+yarn run dev
 
 # Build for production
-npm run build
+yarn
+ run build
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser.

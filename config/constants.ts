@@ -46,6 +46,31 @@ export const ERC20_ABI = [
   },
 ];
 
+// Normalize Alchemy API key: accept either "key" or full URL "https://.../v2/key"
+function getAlchemyApiKey(): string | null {
+  if (typeof process === "undefined") return null;
+  const raw = process.env.NEXT_PUBLIC_ALCHEMY_API_KEY?.trim();
+  if (!raw) return null;
+  if (raw.startsWith("http")) {
+    const lastSegment = raw.split("/").pop()?.split("?")[0];
+    return lastSegment && !lastSegment.startsWith("http") ? lastSegment : null;
+  }
+  return raw;
+}
+
+// RPC URL for read queries (Alchemy when key is set)
+export function getRpcUrl(chainId: number): string | null {
+  const key = getAlchemyApiKey();
+  if (!key) return null;
+  if (chainId === 1) {
+    return `https://eth-mainnet.g.alchemy.com/v2/${key}`;
+  }
+  if (chainId === 11155111) {
+    return `https://eth-sepolia.g.alchemy.com/v2/${key}`;
+  }
+  return null;
+}
+
 // Network Configuration
 export const NETWORKS: Record<
   number,
@@ -64,6 +89,33 @@ export const NETWORKS: Record<
   31337: { name: "Hardhat", explorer: "" },
   11155111: { name: "Sepolia", explorer: "https://sepolia.etherscan.io/tx/" },
 };
+
+// Chains supported for switching (wallet_switchEthereumChain / wallet_addEthereumChain)
+export const SWITCHABLE_CHAINS: {
+  chainId: number;
+  name: string;
+  hexChainId: string;
+  rpcUrl: string;
+  explorer: string;
+  nativeCurrency: { name: string; symbol: string; decimals: number };
+}[] = [
+  {
+    chainId: 1,
+    name: "Ethereum Mainnet",
+    hexChainId: "0x1",
+    rpcUrl: "https://eth.llamarpc.com",
+    explorer: "https://etherscan.io",
+    nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  },
+  {
+    chainId: 11155111,
+    name: "Sepolia",
+    hexChainId: "0xaa36a7",
+    rpcUrl: "https://rpc.sepolia.org",
+    explorer: "https://sepolia.etherscan.io",
+    nativeCurrency: { name: "Sepolia Ether", symbol: "ETH", decimals: 18 },
+  },
+];
 
 // Etherscan API URLs
 export const ETHERSCAN_API_URLS: Record<number, string> = {

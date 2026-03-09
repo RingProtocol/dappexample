@@ -5,6 +5,7 @@ import { useWallet } from "@/hooks/useWallet";
 import { useTokens } from "@/hooks/useTokens";
 import { useTransactions } from "@/hooks/useTransactions";
 import { WalletCard } from "@/components/WalletCard";
+import { SWITCHABLE_CHAINS } from "@/config/constants";
 import { SendTransactionCard } from "@/components/SendTransactionCard";
 import { TokenImportCard } from "@/components/TokenImportCard";
 import { TokenListCard } from "@/components/TokenListCard";
@@ -18,17 +19,20 @@ export default function Home() {
     network,
     isConnected,
     isConnecting,
+    isSwitchingChain,
     connect,
+    switchChain,
     updateBalance,
     sendTransaction,
     getExplorerUrl,
+    web3,
   } = useWallet();
 
   const { tokens, balances, importToken, removeToken, fetchAllBalances } =
-    useTokens(account, useWallet().web3);
+    useTokens(account, web3);
 
   const { sendETH, getAppHistory, fetchEtherscanHistory, isLoading: txLoading } =
-    useTransactions(account, useWallet().web3);
+    useTransactions(account, web3);
 
   const [appTransactions, setAppTransactions] = useState<Transaction[]>([]);
   const [message, setMessage] = useState<{
@@ -49,8 +53,19 @@ export default function Home() {
   const handleConnect = async () => {
     try {
       await connect();
-    } catch (error: any) {
-      showMessage(error.message, "error");
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      showMessage(message || "Failed to connect wallet", "error");
+    }
+  };
+
+  // Handle switch chain
+  const handleSwitchChain = async (chainId: number) => {
+    try {
+      await switchChain(chainId);
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : String(error);
+      showMessage(message || "Failed to switch chain", "error");
     }
   };
 
@@ -125,9 +140,16 @@ export default function Home() {
         <WalletCard
           isConnected={isConnected}
           isConnecting={isConnecting}
+          isSwitchingChain={isSwitchingChain}
           account={account}
           balance={balance}
+          network={network}
+          switchableChains={SWITCHABLE_CHAINS.map((c) => ({
+            chainId: c.chainId,
+            name: c.name,
+          }))}
           onConnect={handleConnect}
+          onSwitchChain={handleSwitchChain}
         />
 
         {/* Send Transaction Section */}

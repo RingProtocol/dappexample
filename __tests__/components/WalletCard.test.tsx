@@ -3,6 +3,17 @@ import { WalletCard } from '@/components/WalletCard';
 
 describe('WalletCard', () => {
   const mockOnConnect = jest.fn();
+  const mockOnSwitchChain = jest.fn();
+  const defaultSwitchableChains = [
+    { chainId: 1, name: 'Ethereum Mainnet' },
+    { chainId: 11155111, name: 'Sepolia' },
+  ];
+
+  const defaultProps = {
+    network: null,
+    switchableChains: defaultSwitchableChains,
+    onSwitchChain: mockOnSwitchChain,
+  };
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -16,6 +27,7 @@ describe('WalletCard', () => {
         account={null}
         balance="0"
         onConnect={mockOnConnect}
+        {...defaultProps}
       />
     );
 
@@ -31,6 +43,7 @@ describe('WalletCard', () => {
         account={null}
         balance="0"
         onConnect={mockOnConnect}
+        {...defaultProps}
       />
     );
 
@@ -46,6 +59,7 @@ describe('WalletCard', () => {
         account={null}
         balance="0"
         onConnect={mockOnConnect}
+        {...defaultProps}
       />
     );
 
@@ -56,27 +70,32 @@ describe('WalletCard', () => {
   it('shows connected state', () => {
     render(
       <WalletCard
+        {...defaultProps}
         isConnected={true}
         isConnecting={false}
         account="0x1234567890123456789012345678901234567890"
         balance="1.5"
         onConnect={mockOnConnect}
+        network={{ chainId: 1, name: 'Ethereum Mainnet', explorer: 'https://etherscan.io/tx/' }}
       />
     );
 
-    expect(screen.getByRole('button', { name: /connected/i })).toBeInTheDocument();
-    expect(screen.getByRole('button')).toBeDisabled();
+    const connectButton = screen.getByRole('button', { name: /connected/i });
+    expect(connectButton).toBeInTheDocument();
+    expect(connectButton).toBeDisabled();
   });
 
   it('displays account and balance when connected', () => {
     const account = '0x1234567890123456789012345678901234567890';
     render(
       <WalletCard
+        {...defaultProps}
         isConnected={true}
         isConnecting={false}
         account={account}
         balance="1.5"
         onConnect={mockOnConnect}
+        network={{ chainId: 1, name: 'Ethereum Mainnet', explorer: 'https://etherscan.io/tx/' }}
       />
     );
 
@@ -96,6 +115,7 @@ describe('WalletCard', () => {
         account={null}
         balance="0"
         onConnect={mockOnConnect}
+        {...defaultProps}
       />
     );
 
@@ -111,6 +131,7 @@ describe('WalletCard', () => {
         account={null}
         balance="0"
         onConnect={mockOnConnect}
+        {...defaultProps}
       />
     );
 
