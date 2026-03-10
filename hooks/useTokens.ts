@@ -29,14 +29,15 @@ export function useTokens(account: string | null, web3: Web3 | null) {
       try {
         const contract = new web3.eth.Contract(ERC20_ABI as any, token.address);
         const balance = await contract.methods.balanceOf(account).call();
+        const balanceStr = balance != null ? String(balance) : "0";
         const formattedBalance = (
-          Number(balance) / Math.pow(10, token.decimals)
+          Number(balanceStr) / Math.pow(10, token.decimals)
         ).toFixed(4);
 
         setBalances((prev) => {
           const newMap = new Map(prev);
           newMap.set(token.address.toLowerCase(), {
-            raw: balance.toString(),
+            raw: balanceStr,
             formatted: formattedBalance,
             symbol: token.symbol,
           });
